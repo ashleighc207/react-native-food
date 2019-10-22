@@ -27,7 +27,7 @@ const SearchScreen = () => {
     searchResults("steak");
   }, []);
   return (
-    <View style={{ flex: 1 }}>
+    <>
       <SearchBar
         searchTerm={searchTerm}
         onSearchTermChange={newSearchTerm => setSearchTerm(newSearchTerm)}
@@ -71,7 +71,7 @@ const SearchScreen = () => {
           </Text>
         </View>
       )}
-    </View>
+    </>
   );
 };
 
