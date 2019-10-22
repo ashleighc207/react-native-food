@@ -1,8 +1,14 @@
 import React from "react";
-import { Text, View, StyleSheet, Image, FlatList } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  FlatList,
+  TouchableOpacity
+} from "react-native";
 
-const RestaurantList = ({ data, heading }) => {
-  console.log(data);
+const RestaurantList = ({ data, heading, navigation }) => {
   return (
     <View style={styles.mainContainer}>
       <Text style={styles.heading}>{heading}</Text>
@@ -14,19 +20,20 @@ const RestaurantList = ({ data, heading }) => {
         keyExtractor={data => data.id}
         renderItem={({ item }) => {
           return (
-            <View style={styles.container}>
-              <Text style={styles.title}>
-                {item.name.length > 21
-                  ? item.name.substr(0, 21) + "..."
-                  : item.name}
-              </Text>
-              <Image source={{ uri: item.image_url }} style={styles.image} />
-
-              <Text style={styles.ratingsText}>
-                Rating: {item.rating} <Text style={styles.pipe}>|</Text>{" "}
-                {item.review_count} Reviews
-              </Text>
-            </View>
+            <TouchableOpacity onPress={() => navigation.navigate("Detail")}>
+              <View style={styles.container}>
+                <Text style={styles.title}>
+                  {item.name.length > 21
+                    ? item.name.substr(0, 21) + "..."
+                    : item.name}
+                </Text>
+                <Image source={{ uri: item.image_url }} style={styles.image} />
+                <Text style={styles.ratingsText}>
+                  Rating: {item.rating} <Text style={styles.pipe}>|</Text>{" "}
+                  {item.review_count} Reviews
+                </Text>
+              </View>
+            </TouchableOpacity>
           );
         }}
       ></FlatList>

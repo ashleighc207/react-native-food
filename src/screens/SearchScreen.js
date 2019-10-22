@@ -4,7 +4,7 @@ import SearchBar from "../components/SearchBar";
 import RestaurantList from "../components/RestaurantList";
 import yelp from "../api/yelp";
 
-const SearchScreen = () => {
+const SearchScreen = ({ navigation }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [results, setResults] = useState([]);
   const [error, setError] = useState(false);
@@ -39,24 +39,28 @@ const SearchScreen = () => {
       {!error ? (
         <ScrollView style={styles.container}>
           <RestaurantList
+            navigation={navigation}
             heading="Cheap Bites"
             data={results.filter(r => {
               return r.price !== undefined && r.price.length === 1;
             })}
           />
           <RestaurantList
+            navigation={navigation}
             heading="Kinda Costly"
             data={results.filter(r => {
               return r.price !== undefined && r.price.length === 2;
             })}
           />
           <RestaurantList
+            navigation={navigation}
             heading="Quite Expensive"
             data={results.filter(r => {
               return r.price !== undefined && r.price.length >= 3;
             })}
           />
           <RestaurantList
+            navigation={navigation}
             heading="Unknown Prices"
             data={results.filter(r => {
               return r.price === undefined;
