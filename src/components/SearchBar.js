@@ -28,7 +28,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     height: 50,
     borderRadius: 10,
-    marginVertical: 30,
+    marginTop: 30,
+    marginBottom: 5,
     flexDirection: "row",
     justifyContent: "space-between"
   },
