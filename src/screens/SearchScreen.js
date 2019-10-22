@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Text, StyleSheet, View, FlatList } from "react-native";
+import React, { useState, useEffect } from "react";
+import { Text, StyleSheet, View, FlatList, ScrollView } from "react-native";
 import SearchBar from "../components/SearchBar";
 import RestaurantList from "../components/RestaurantList";
 import yelp from "../api/yelp";
@@ -8,39 +8,61 @@ const SearchScreen = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [results, setResults] = useState([]);
   const [error, setError] = useState(false);
-  const searchResults = async () => {
+  const searchResults = async term => {
     try {
       const response = await yelp.get("/search", {
         params: {
           limit: 20,
-          term: searchTerm,
+          term: term,
           location: "baltimore"
         }
       });
       setError(false);
       setResults(response.data.businesses);
     } catch (err) {
-      console.log(err);
       setError(true);
     }
   };
+  useEffect(() => {
+    searchResults("steak");
+  }, []);
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <SearchBar
         searchTerm={searchTerm}
         onSearchTermChange={newSearchTerm => setSearchTerm(newSearchTerm)}
-        onSearchSubmit={() => searchResults()}
+        onSearchSubmit={() => searchResults(searchTerm)}
       />
       <Text
         style={styles.searchText}
       >{`Search returned ${results.length} results`}</Text>
       {!error ? (
-        <FlatList
-          data={results}
-          renderItem={({ item }) => {
-            return <RestaurantList />;
-          }}
-        ></FlatList>
+        <ScrollView style={styles.container}>
+          <RestaurantList
+            heading="Cheap Bites"
+            data={results.filter(r => {
+              return r.price !== undefined && r.price.length === 1;
+            })}
+          />
+          <RestaurantList
+            heading="Kinda Costly"
+            data={results.filter(r => {
+              return r.price !== undefined && r.price.length === 2;
+            })}
+          />
+          <RestaurantList
+            heading="Quite Expensive"
+            data={results.filter(r => {
+              return r.price !== undefined && r.price.length >= 3;
+            })}
+          />
+          <RestaurantList
+            heading="Unknown Prices"
+            data={results.filter(r => {
+              return r.price === undefined;
+            })}
+          />
+        </ScrollView>
       ) : (
         <View>
           <Text style={styles.errorHeading}>Uh oh, something went wrong!</Text>
@@ -74,6 +96,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
     marginTop: 10,
     textAlign: "center"
+  },
+  container: {
+    marginHorizontal: 30,
+    marginVertical: 20,
+    flex: 1
   }
 });
 
