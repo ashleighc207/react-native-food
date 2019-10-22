@@ -1,8 +1,18 @@
 import React from "react";
-import { Text } from "react-native";
+import { Text, StyleSheet, View } from "react-native";
 
 const SearchScreen = () => {
-  return <Text>Test</Text>;
+  return (
+    <View>
+      <Text style={styles.text}>Search Screen</Text>
+    </View>
+  );
 };
+
+const styles = StyleSheet.create({
+  text: {
+    fontSize: 20
+  }
+});
 
 export default SearchScreen;
