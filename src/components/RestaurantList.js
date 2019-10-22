@@ -20,7 +20,9 @@ const RestaurantList = ({ data, heading, navigation }) => {
         keyExtractor={data => data.id}
         renderItem={({ item }) => {
           return (
-            <TouchableOpacity onPress={() => navigation.navigate("Detail")}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Detail", { id: item.id })}
+            >
               <View style={styles.container}>
                 <Text style={styles.title}>
                   {item.name.length > 21
