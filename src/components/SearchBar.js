@@ -2,11 +2,16 @@ import React from "react";
 import { Text, StyleSheet, View, TextInput } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 
-const SearchBar = () => {
+const SearchBar = ({ searchTerm, onSearchTermChange }) => {
   return (
     <View style={styles.searchBar}>
       <MaterialIcons name="search" style={styles.searchIcon} />
-      <TextInput style={styles.textInput} placeholder="Search" />
+      <TextInput
+        style={styles.textInput}
+        placeholder="Search"
+        value={searchTerm}
+        onChangeText={newSearchTerm => onSearchTermChange(newSearchTerm)}
+      />
     </View>
   );
 };
@@ -35,7 +40,8 @@ const styles = StyleSheet.create({
   searchIcon: {
     fontSize: 30,
     alignSelf: "center",
-    marginHorizontal: 10
+    marginHorizontal: 10,
+    color: "rgba(88,156,180,0.95)"
   }
 });
 
