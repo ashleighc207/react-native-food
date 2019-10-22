@@ -4,11 +4,15 @@ import SearchBar from "../components/SearchBar";
 
 const SearchScreen = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const searchResults = () => {
+    console.log("searching!");
+  };
   return (
     <View>
       <SearchBar
         searchTerm={searchTerm}
         onSearchTermChange={newSearchTerm => setSearchTerm(newSearchTerm)}
+        onSearchSubmit={() => searchResults()}
       />
     </View>
   );
