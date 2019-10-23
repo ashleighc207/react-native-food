@@ -10,36 +10,43 @@ import {
 
 const RestaurantList = ({ data, heading, navigation }) => {
   return (
-    <View style={styles.mainContainer}>
-      <Text style={styles.heading}>{heading}</Text>
-      <Text style={styles.results}>Results: {data.length} matches</Text>
-      <FlatList
-        data={data}
-        horizontal
-        showHorizontalScrollIndicator={false}
-        keyExtractor={data => data.id}
-        renderItem={({ item }) => {
-          return (
-            <TouchableOpacity
-              onPress={() => navigation.navigate("Detail", { id: item.id })}
-            >
-              <View style={styles.container}>
-                <Text style={styles.title}>
-                  {item.name.length > 21
-                    ? item.name.substr(0, 21) + "..."
-                    : item.name}
-                </Text>
-                <Image source={{ uri: item.image_url }} style={styles.image} />
-                <Text style={styles.ratingsText}>
-                  Rating: {item.rating} <Text style={styles.pipe}>|</Text>{" "}
-                  {item.review_count} Reviews
-                </Text>
-              </View>
-            </TouchableOpacity>
-          );
-        }}
-      ></FlatList>
-    </View>
+    <>
+      {data.length > 0 && (
+        <View style={styles.mainContainer}>
+          <Text style={styles.heading}>{heading}</Text>
+          <Text style={styles.results}>Results: {data.length} matches</Text>
+          <FlatList
+            data={data}
+            horizontal
+            showHorizontalScrollIndicator={false}
+            keyExtractor={data => data.id}
+            renderItem={({ item }) => {
+              return (
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("Detail", { id: item.id })}
+                >
+                  <View style={styles.container}>
+                    <Text style={styles.title}>
+                      {item.name.length > 21
+                        ? item.name.substr(0, 21) + "..."
+                        : item.name}
+                    </Text>
+                    <Image
+                      source={{ uri: item.image_url }}
+                      style={styles.image}
+                    />
+                    <Text style={styles.ratingsText}>
+                      Rating: {item.rating} <Text style={styles.pipe}>|</Text>{" "}
+                      {item.review_count} Reviews
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              );
+            }}
+          ></FlatList>
+        </View>
+      )}
+    </>
   );
 };
 
